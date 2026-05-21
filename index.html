@@ -1045,37 +1045,29 @@
   }
 
   // ── Email form ──
+  // URL del Google Apps Script Web App — sostituisci con il tuo URL dopo il deploy
+  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyigLIFLCZL-tbAgtiOPqLrF-_DwQnFYOLoKsSAnoFGh3e_KPsqumfHLQ5P1KWllb-f2Q/exec';
+
   function handleEmailSubmit(e) {
     e.preventDefault();
-    const form = e.target;
-    const nome  = form.nome.value.trim();
-    const email = form.email.value.trim();
+    const form    = e.target;
+    const nome    = form.nome.value.trim();
+    const email   = form.email.value.trim();
     const profilo = form.profilo.value;
 
-    /*
-    ══════════════════════════════════════════════════════
-    INTEGRAZIONE BACKEND — sostituisci questo blocco con
-    la chiamata al tuo endpoint Power Automate / MailerLite.
+    const btn = form.querySelector('button[type="submit"]');
+    btn.textContent = 'Invio in corso…';
+    btn.disabled = true;
 
-    Esempio Power Automate HTTP trigger:
-    fetch('https://prod-XX.westeurope.logic.azure.com/...',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({ nome, email, profilo })
-    }).then(r => showThankyou()).catch(err => console.error(err));
-
-    Esempio MailerLite API:
-    fetch('https://api.mailerlite.com/api/v2/subscribers',{
-      method:'POST',
-      headers:{'X-MailerLite-ApiKey':'TUO_API_KEY','Content-Type':'application/json'},
-      body: JSON.stringify({ email, name: nome, fields: { profilo } })
-    }).then(() => showThankyou());
-    ══════════════════════════════════════════════════════
-    */
-
-    // Per ora — mostra thank you senza invio reale (rimuovi questa riga dopo aver collegato il backend)
-    console.log('Iscrizione:', { nome, email, profilo });
-    showThankyou();
+    // Invia i dati al Google Apps Script (mode no-cors = nessun errore CORS)
+    fetch(SCRIPT_URL, {
+      method: 'POST',
+      mode:   'no-cors',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({ nome, email, profilo })
+    })
+    .catch(err => console.warn('Fetch error:', err))
+    .finally(() => showThankyou());
   }
 
   function showThankyou() {
