@@ -38,12 +38,59 @@
     .container { max-width: 680px; margin: 0 auto; padding: 0 20px; }
 
     /* ── HERO ── */
-    .hero {
-      background: linear-gradient(160deg, #f5ede2 0%, var(--crema) 60%);
-      padding: 32px 20px 44px;
-      text-align: center;
-      border-bottom: 3px solid var(--mauve);
+    @keyframes floatBook {
+      0%   { transform: translateY(0px) rotate(-2deg); }
+      50%  { transform: translateY(-10px) rotate(-2deg); }
+      100% { transform: translateY(0px) rotate(-2deg); }
     }
+    @keyframes fadeSlideLeft {
+      from { opacity: 0; transform: translateX(-28px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes fadeSlideRight {
+      from { opacity: 0; transform: translateX(28px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #f0e6d8 0%, #faf6f0 50%, #ede8df 100%);
+      padding: 56px 20px 60px;
+      border-bottom: 3px solid var(--mauve);
+      overflow: hidden;
+      position: relative;
+    }
+    /* cerchio decorativo sfumato di sfondo */
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -80px; right: -80px;
+      width: 380px; height: 380px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(196,122,90,.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    /* layout interno a due colonne */
+    .hero-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 48px;
+    }
+    .hero-text {
+      flex: 1;
+      text-align: left;
+      animation: fadeSlideLeft .7s ease both;
+    }
+    .hero-visual {
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      animation: fadeSlideRight .7s ease .1s both;
+    }
+
     .hero-tag {
       display: inline-block;
       background: var(--terra);
@@ -54,16 +101,26 @@
       text-transform: uppercase;
       padding: 6px 18px;
       border-radius: 20px;
-      margin-bottom: 20px;
+      margin-bottom: 22px;
     }
     .hero-book {
-      width: 220px;
-      margin: 0 auto 24px;
-      border-radius: 6px;
-      box-shadow: 0 12px 40px rgba(44,36,32,.22);
+      width: 240px;
+      border-radius: 8px;
+      box-shadow: 0 20px 56px rgba(44,36,32,.30), 0 4px 12px rgba(196,122,90,.20);
+      animation: floatBook 4s ease-in-out infinite;
+      transform-origin: center bottom;
     }
+    .hero-book-caption {
+      margin-top: 14px;
+      font-size: 12px;
+      color: var(--grigio);
+      text-align: center;
+      font-style: italic;
+      letter-spacing: .5px;
+    }
+
     .hero h1 {
-      font-size: clamp(26px, 6vw, 40px);
+      font-size: clamp(26px, 5vw, 42px);
       color: var(--terra);
       line-height: 1.2;
       margin-bottom: 16px;
@@ -72,9 +129,10 @@
     .hero .subtitle {
       font-size: 16px;
       color: var(--grigio);
-      max-width: 480px;
-      margin: 0 auto 30px;
+      max-width: 420px;
+      margin: 0 0 30px;
       font-style: italic;
+      line-height: 1.6;
     }
     .btn-primary {
       display: inline-block;
@@ -86,15 +144,29 @@
       font-family: 'Georgia', serif;
       text-decoration: none;
       letter-spacing: .5px;
-      transition: background .2s, transform .15s;
+      transition: background .2s, transform .15s, box-shadow .2s;
       border: none;
       cursor: pointer;
+      box-shadow: 0 6px 20px rgba(196,122,90,.35);
     }
-    .btn-primary:hover { background: var(--terra-dark); transform: translateY(-2px); }
+    .btn-primary:hover {
+      background: var(--terra-dark);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 28px rgba(196,122,90,.45);
+    }
     .hero-note {
       margin-top: 16px;
       font-size: 13px;
       color: var(--grigio);
+    }
+
+    /* mobile: torna a layout verticale */
+    @media (max-width: 640px) {
+      .hero { padding: 36px 20px 44px; }
+      .hero-inner { flex-direction: column-reverse; gap: 28px; }
+      .hero-text { text-align: center; }
+      .hero .subtitle { margin: 0 auto 28px; }
+      .hero-book { width: 180px; }
     }
 
     /* ── INTRO STRIP ── */
@@ -494,17 +566,27 @@
      HERO
 ══════════════════════════════════════ -->
 <section class="hero">
-  <div class="hero-tag">Test gratuito</div>
+  <div class="hero-inner">
 
-  <img class="hero-book" src="cover.png" alt="Smettere di Pensare Troppo — Aurelia Stone">
+    <!-- colonna testo -->
+    <div class="hero-text">
+      <div class="hero-tag">Test gratuito</div>
+      <h1>Scopri il tuo<br><em>profilo di pensiero</em></h1>
+      <p class="subtitle">
+        15 domande, 5 minuti. Scopri se sei più incline al rimuginio,
+        alla catastrofizzazione o al critico interiore — e ricevi i tuoi bonus gratuiti.
+      </p>
+      <a href="#test-section" class="btn-primary">Inizia il test &darr;</a>
+      <p class="hero-note">Dal libro <em>Smettere di Pensare Troppo</em> · Aurelia Stone</p>
+    </div>
 
-  <h1>Scopri il tuo<br><em>profilo di pensiero</em></h1>
-  <p class="subtitle">
-    15 domande, 5 minuti. Scopri se sei più incline al rimuginio,
-    alla catastrofizzazione o al critico interiore — e ricevi i tuoi bonus gratuiti.
-  </p>
-  <a href="#test-section" class="btn-primary">Inizia il test &darr;</a>
-  <p class="hero-note">Dal libro <em>Smettere di Pensare Troppo</em> · Aurelia Stone</p>
+    <!-- colonna copertina -->
+    <div class="hero-visual">
+      <img class="hero-book" src="cover.png" alt="Smettere di Pensare Troppo — Aurelia Stone">
+      <p class="hero-book-caption">Aurelia Stone</p>
+    </div>
+
+  </div>
 </section>
 
 <!-- ══════════════════════════════════════
