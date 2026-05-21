@@ -103,13 +103,16 @@
       border-radius: 20px;
       margin-bottom: 22px;
     }
+    .hero-book-wrap {
+      animation: floatBook 4s ease-in-out infinite;
+      transform-origin: center bottom;
+      display: inline-block;
+    }
     .hero-book {
       width: 240px;
       border-radius: 8px;
       box-shadow: 0 20px 56px rgba(44,36,32,.30), 0 4px 12px rgba(196,122,90,.20);
-      animation: floatBook 4s ease-in-out infinite;
-      transform-origin: center bottom;
-      mix-blend-mode: multiply;
+      display: block;
     }
     .hero-book-caption {
       margin-top: 14px;
@@ -189,6 +192,7 @@
       .hero-text { text-align: center; }
       .hero .subtitle { margin: 0 auto 28px; }
       .hero-book { width: 180px; }
+      .hero-book-wrap { display: inline-block; }
     }
 
     /* ── INTRO STRIP ── */
@@ -608,7 +612,9 @@
 
     <!-- colonna copertina -->
     <div class="hero-visual">
-      <img class="hero-book" src="cover.png" alt="Smettere di Pensare Troppo — Aurelia Stone">
+      <div class="hero-book-wrap">
+        <img class="hero-book" src="cover.png" alt="Smettere di Pensare Troppo — Aurelia Stone">
+      </div>
     </div>
 
   </div>
