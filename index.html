@@ -109,6 +109,7 @@
       box-shadow: 0 20px 56px rgba(44,36,32,.30), 0 4px 12px rgba(196,122,90,.20);
       animation: floatBook 4s ease-in-out infinite;
       transform-origin: center bottom;
+      mix-blend-mode: multiply;
     }
     .hero-book-caption {
       margin-top: 14px;
@@ -117,6 +118,27 @@
       text-align: center;
       font-style: italic;
       letter-spacing: .5px;
+    }
+
+    /* ── HERO LOGO ── */
+    .hero-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+    .hero-logo img {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    .hero-logo span {
+      font-size: 13px;
+      color: var(--grigio);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      font-family: 'Georgia', serif;
     }
 
     .hero h1 {
@@ -570,6 +592,10 @@
 
     <!-- colonna testo -->
     <div class="hero-text">
+      <div class="hero-logo">
+        <img src="logo.png" alt="Aurelia Stone">
+        <span>Aurelia Stone</span>
+      </div>
       <div class="hero-tag">Test gratuito</div>
       <h1>Scopri il tuo<br><em>profilo di pensiero</em></h1>
       <p class="subtitle">
@@ -583,7 +609,6 @@
     <!-- colonna copertina -->
     <div class="hero-visual">
       <img class="hero-book" src="cover.png" alt="Smettere di Pensare Troppo — Aurelia Stone">
-      <p class="hero-book-caption">Aurelia Stone</p>
     </div>
 
   </div>
